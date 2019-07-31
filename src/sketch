@@ -75,7 +75,7 @@ then
   echo "Created by Matthieu Petiteau <mpetiteau.pro@gmail.com>"
   echo " "
   echo "A nice thing is to alias in your .bashrc sketch to"
-  echo "access it more easily. Personaly I'm using 'alias s=~/./sketch'"
+  echo "access it more easily. Personaly I'm using 'alias s=sketch'"
   echo " "
   echo " "
   echo "PARAMETERS"

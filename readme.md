@@ -14,19 +14,24 @@ Sketch is a small productivity script to rapidly generate and access draft files
 ## Set up
 Clone this repository and run the following commands.  
 ```sh
-cp src/sketch .sketchconfig ~
-chmod +x ~/sketch
+make install
 ```
-A good thing is to alias Sketch to a shortcut to run it faster from the terminal .  I personaly use `s`.  You will need to close and reopen your terminal so the change can apply.  
+OR  
+```sh
+cp src/sketch /usr/local/bin/sketch && chmod 755 /usr/local/bin/sketch
+```
+
+You can now run sketch by typing `sketch` in your terminal.  
+A good thing is to alias Sketch to a shortcut to run it even faster from the terminal .  I personaly use `s`.  You will need to close and reopen your terminal so the change can apply.  
 ```sh
 # ~/.zshrc or ~/.bashrc
-alias s="~/./sketch"
+alias s="sketch"
 ```
 ## Usage
 
 In `~/.sketchconfig` you can enter your favourite text editor (ex: `vim`, `nano` or `subl`), note that `vim` is set-up as default (`:q!` to exit if needed lol).  
 
-**Let's suppose you aliased sketch to `s`**  
+**Let's suppose you aliased `sketch` to `s`**  
 
 -  `s` automatically open a new draft file from the sketch directory.  
 -  `s -h` or `s --help` to get help on how to use sketch. 
