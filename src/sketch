@@ -68,7 +68,7 @@ then
   echo " (_-</  '_/ -_) __/ __/ _ \'"
   echo "/___/_/\_\\__/\__/\__/_//_/"
   echo "                           "
-  echo "Sketch is a small utilitary to rapidly generate"
+  echo "Sketch is a small productivity tool to rapidly generate"
   echo "and access draft files from the terminal."
   echo "Created by Matthieu Petiteau <mpetiteau.pro@gmail.com>"
   echo " "
