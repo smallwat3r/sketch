@@ -106,7 +106,7 @@ then
   echo "last sketch file saved. -l2 will open the previous one, etc."
   echo " "
   echo "--purge or -pu"
-  echo "Purge all the files created in the temp dir under ~/.sketch.swp"
+  echo "Purge all the files created in the temp dir."
   echo " "
   echo "--version or -v"
   echo "Show Sketch version number."
