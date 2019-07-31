@@ -1,0 +1,93 @@
+#!/bin/bash
+# File              : sketch
+# Author            : Matthieu Petiteau <mpetiteau.pro@gmail.com>
+# Date              : Wed 31 Jul 00:49:59 2019
+# Last Modified Date: Wed 31 Jul 00:49:59 2019
+# Last Modified By  : Matthieu Petiteau <mpetiteau.pro@gmail.com>
+#         __       __      __
+#    ___ / /_____ / /_____/ /
+#   (_-</  '_/ -_) __/ __/ _ \
+#  /___/_/\_\\__/\__/\__/_//_/
+
+
+# Temp folder for sketch files.
+TEMP_SKETCH=$HOME/.sketch.swp
+if [ ! -d $TEMP_SKETCH ]
+then
+  mkdir $TEMP_SKETCH
+fi
+
+# Find config file.
+if [ -f ../.sketchconfig ]
+then
+  . ../.sketchconfig
+elif [ -f $HOME/.sketchconfig ]
+then
+  . $HOME/.sketchconfig
+elif [ -f .sketchconfig ]
+then
+  . .sketchconfig
+fi
+
+editor=$editor
+if [[ -z $editor ]]
+then
+  # Default editor if no .sketchconfig detected.
+  editor=vim
+fi
+
+# New sketch.
+if [[ -z $1 ]]
+then
+  file=$(($(ls $TEMP_SKETCH | wc -l))).sketch
+  $editor $TEMP_SKETCH/$file
+# Last sketch.
+elif [[ $1 == "--last" || $1 == "-l" ]]
+then
+  if [ -n "$(ls -A $TEMP_SKETCH 2>/dev/null)" ]
+  then
+    file=$(($(ls $TEMP_SKETCH | wc -l) - 1)).sketch
+    $editor $TEMP_SKETCH/$file
+  else
+    echo "No previous sketch found."
+  fi
+# Clean sketchs.
+elif [[ $1 == "--purge" || $1 == "-pu" ]]
+then
+  if [ -n "$(ls -A $TEMP_SKETCH 2>/dev/null)" ]
+  then
+    rm $TEMP_SKETCH/*
+    echo "Sketch files has been purged."
+  else
+    echo "No files to purge."
+  fi
+elif [[ $1 == "--help" || $1 == "-h" ]]
+then
+  echo "       __       __      __ "
+  echo "  ___ / /_____ / /_____/ / "
+  echo " (_-</  '_/ -_) __/ __/ _ \'"
+  echo "/___/_/\_\\__/\__/\__/_//_/"
+  echo "                           "
+  echo "Sketch is a small utilitary to rapidly generate"
+  echo "and access draft files from the terminal."
+  echo "Created by Matthieu Petiteau <mpetiteau.pro@gmail.com>"
+  echo " "
+  echo "A nice thing is to alias in your .bashrc sketch to"
+  echo "access it more easily. Personaly I'm using 'alias s=./sketch'"
+  echo " "
+  echo " "
+  echo "PARAMETERS"
+  echo "------------------------------------------------------------"
+  echo " "
+  echo "--help or -h"
+  echo "Help and informations."
+  echo " "
+  echo "--last or -l"
+  echo "Open the last file created by sketch."
+  echo " "
+  echo "--purge or -pu"
+  echo "Purge all the files created in the temp dir under ~/.sketch.swp"
+  echo " "
+else
+  echo "Command does not exist."
+fi
