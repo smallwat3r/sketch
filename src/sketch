@@ -57,7 +57,7 @@ then
   if [ -n "$(ls -A $TEMP_SKETCH 2>/dev/null)" ]
   then
     rm $TEMP_SKETCH/*
-    echo "Sketch files has been purged."
+    echo "Sketch files have been purged."
   else
     echo "No files to purge."
   fi
