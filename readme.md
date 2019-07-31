@@ -40,6 +40,7 @@ In `~/.sketchconfig` you can enter your favourite text editor (ex: `vim`, `nano`
 -  `s -h` or `s --help` to get help on how to use sketch. 
 -  `s -l<number>` to re-open archived sketch files you saved. For example `s -l1` will open the last sketch file you saved. `s -l2` will open the previous, etc.  
 -  `s -pu` or `s --purge` to purge all the draft files sketch created.  
+-  `s -v` or `s --version` to show version number.  
 
 ---
 

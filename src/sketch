@@ -73,6 +73,10 @@ then
   else
     echo "No files to purge."
   fi
+# Versioning.
+elif [[ $param == "--version" || $param == "-v" ]]
+then
+  echo "sketch v1.1"
 elif [[ $param == "--help" || $param == "-h" ]]
 then
   echo "       __       __      __ "
@@ -87,6 +91,7 @@ then
   echo "A nice thing is to alias in your .bashrc sketch to"
   echo "access it more easily. Personaly I'm using 'alias s=sketch'"
   echo " "
+  echo "version 1.1"
   echo " "
   echo "PARAMETERS"
   echo "------------------------------------------------------------"
@@ -100,6 +105,9 @@ then
   echo " "
   echo "--purge or -pu"
   echo "Purge all the files created in the temp dir under ~/.sketch.swp"
+  echo " "
+  echo "--version or -v"
+  echo "Show Sketch version number."
   echo " "
 else
   echo "Command does not exist."
