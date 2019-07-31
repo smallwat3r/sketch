@@ -24,7 +24,7 @@ alias s="~/./sketch"
 ```
 ## Usage
 
-In `~/.sketchconfig` you can enter your favourite text editor (ex: `vim` or `nano`), note that `vim` is set-up as default (`:q!` to exit if needed lol).  
+In `~/.sketchconfig` you can enter your favourite text editor (ex: `vim`, `nano` or `subl`), note that `vim` is set-up as default (`:q!` to exit if needed lol).  
 
 **Let's suppose you aliased sketch to `s`**  
 
