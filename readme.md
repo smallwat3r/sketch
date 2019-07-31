@@ -7,9 +7,9 @@
 
 # Sketch
 
-I always keep a draft file open in my window in case I need to quickly note or copy something for later. But I spend most of my time in my terminal and I've decided to build a simple bash script that will help me save time.  
+I always keep a blank file open in a corner of my window in case I need to quickly  note or copy something for later. But I spend most of my time in my  terminal and I've decided to build a simple bash script that will help  me save time.
 
-Sketch is a small utilitary to rapidly generate and access draft files from a unique folder directly from the terminal.  
+Sketch is a small productivity script to rapidly generate and access draft files from a unique folder directly from the terminal.  
 
 ## Set up
 Clone this repository and run the following commands.  
@@ -24,7 +24,7 @@ alias s="~/./sketch"
 ```
 ## Usage
 
-In `~/.sketchconfig` you can enter your favourite text editor (ex: `vim` or `nano`), note that `vim` is set-up as default (`:q!` to exit if needed lol).  
+In `~/.sketchconfig` you can enter your favourite text editor (ex: `vim`, `nano` or `subl`), note that `vim` is set-up as default (`:q!` to exit if needed lol).  
 
 **Let's suppose you aliased sketch to `s`**  
 
