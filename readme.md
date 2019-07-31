@@ -30,9 +30,7 @@ In `~/.sketchconfig` you can enter your favourite text editor (ex: `vim`, `nano`
 
 -  `s` automatically open a new draft file from the sketch directory.  
 -  `s -h` or `s --help` to get help on how to use sketch. 
--  `s -l` or `s --last` to re-open the last sketch file you saved.  
--  `s -ll` to re-open the second last sketch file you saved.  
--  `s -lll` to re-open the third last sketch file you saved.  
+-  `s -l<number>` to re-open archived sketch files you saved. For example `-l1` will open the last sketch file you saved.` ``-l2` will open the previous, etc.  
 -  `s -pu` or `s --purge` to purge all the draft files sketch created.  
 
  Sketch is archiving the saved draft files under a directory at  `~/.sketch.swp` , all the files are named as `<incremental_integer>.sketch`

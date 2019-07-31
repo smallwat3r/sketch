@@ -17,17 +17,15 @@ then
   mkdir $TEMP_SKETCH
 fi
 
-# Find config file.
-if [ -f ../.sketchconfig ]
-then
-  . ../.sketchconfig
-elif [ -f $HOME/.sketchconfig ]
-then
-  . $HOME/.sketchconfig
-elif [ -f .sketchconfig ]
-then
-  . .sketchconfig
-fi
+# Load conf from possible locations.
+conf_dir=(../.sketchconfig $HOME/.sketchconfig .sketchconfig)
+for d in "${conf_dir[@]}"
+do
+  if [ -f $d ]
+  then
+    . $d
+  fi
+done
 
 editor=$editor
 if [[ -z $editor ]]
@@ -36,43 +34,27 @@ then
   editor=vim
 fi
 
+param=$1
+
 # New sketch.
-if [[ -z $1 ]]
+if [[ -z $param ]]
 then
   file=$(($(ls $TEMP_SKETCH | wc -l))).sketch
   $editor $TEMP_SKETCH/$file
-# Last sketch.
-elif [[ $1 == "--last" || $1 == "-l" ]]
+# Re-open previous sketch files.
+elif [[ $param == -l* ]] && [[ "${param:2}" =~ ^[0-9]+(\.[0-9]+)?$ ]]
 then
-  if [ -n "$(ls -A $TEMP_SKETCH 2>/dev/null)" ]
+  nb="${param:2}"
+  av=$(ls $TEMP_SKETCH | wc -l)
+  if [ $av -gt $nb ] || [ $av -eq $nb ]
   then
-    file=$(($(ls $TEMP_SKETCH | wc -l) - 1)).sketch
+    file=$(($(ls $TEMP_SKETCH | wc -l) - $nb)).sketch
     $editor $TEMP_SKETCH/$file
   else
-    echo "No previous sketch found."
-  fi
-# Last *2 sketch.
-elif [[ $1 == "-ll" ]]
-then
-  if [ $(ls $TEMP_SKETCH | wc -l) -eq 2 ]
-  then
-    file=$(($(ls $TEMP_SKETCH | wc -l) - 2)).sketch
-    $editor $TEMP_SKETCH/$file
-  else
-    echo "No previous*2 sketch found"
-  fi
-# Last *3 sketch.
-elif [[ $1 == "-lll" ]]
-then
-  if [ $(ls $TEMP_SKETCH | wc -l) -eq 3 ]
-  then
-    file=$(($(ls $TEMP_SKETCH | wc -l) - 3)).sketch
-    $editor $TEMP_SKETCH/$file
-  else
-    echo "No previous*3 sketch found"
+    echo "No previous*$nb sketch found"
   fi
 # Clean sketchs.
-elif [[ $1 == "--purge" || $1 == "-pu" ]]
+elif [[ $param == "--purge" || $param == "-pu" ]]
 then
   if [ -n "$(ls -A $TEMP_SKETCH 2>/dev/null)" ]
   then
@@ -81,7 +63,7 @@ then
   else
     echo "No files to purge."
   fi
-elif [[ $1 == "--help" || $1 == "-h" ]]
+elif [[ $param == "--help" || $param == "-h" ]]
 then
   echo "       __       __      __ "
   echo "  ___ / /_____ / /_____/ / "
@@ -102,14 +84,9 @@ then
   echo "--help or -h"
   echo "Help and informations."
   echo " "
-  echo "--last or -l"
-  echo "Open the last sketch file saved."
-  echo " "
-  echo "-ll"
-  echo "Open the second last sketch file saved."
-  echo " "
-  echo "-lll"
-  echo "Open the third last sketch file saved."
+  echo "-l<number>"
+  echo "Open archived sketch files saved. Example: -l1 will open the"
+  echo "last sketch file saved. -l2 will open the previous one, etc."
   echo " "
   echo "--purge or -pu"
   echo "Purge all the files created in the temp dir under ~/.sketch.swp"
