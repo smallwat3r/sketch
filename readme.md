@@ -41,5 +41,5 @@ In `~/.sketchconfig` you can enter your favourite text editor (ex: `vim`, `nano`
 
 ---
 
-Sketch is archiving the saved draft files under a default dir at  `$HOME/.local/share/sketch_dir` or `$XDG_DATA_HOME/sketch_dir` (if dir not specified in `.sketchconfig`), all the files are named as `<incremental_integer>.sketch`
+Sketch is archiving the saved draft files under a default dir at  `$HOME/.local/share/sketch_dir` or `$XDG_DATA_HOME/sketch_dir` (if `sketch_dir` not specified in `.sketchconfig`), all the files are named as `<incremental_integer>.sketch`
 
