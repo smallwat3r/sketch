@@ -10,28 +10,38 @@
 #  /___/_/\_\\__/\__/\__/_//_/
 
 
-# Temp folder for sketch files.
-TEMP_SKETCH=$HOME/.sketch.swp
-if [ ! -d $TEMP_SKETCH ]
-then
-  mkdir $TEMP_SKETCH
-fi
-
 # Load conf from possible locations.
-conf_dir=(../.sketchconfig $HOME/.sketchconfig .sketchconfig)
+conf_dir=(.sketchconfig ../.sketchconfig $XDG_CONFIG_HOME/.sketchconfig  $HOME/.config/.sketchconfig $HOME/.sketchconfig)
 for d in "${conf_dir[@]}"
 do
   if [ -f $d ]
   then
     . $d
+    break
   fi
 done
 
 editor=$editor
 if [[ -z $editor ]]
 then
-  # Default editor if no .sketchconfig detected.
+  # Default editor.
   editor=vim
+fi
+
+sketch_dir=$sketch_dir
+if [[ -z $sketch_dir ]]
+then
+  if [[ -d $XDG_DATA_HOME ]]
+  then
+    sketch_dir=$XDG_DATA_HOME/sketch_dir
+  else
+    sketch_dir=$HOME/.local/share/sketch_dir
+  fi
+fi
+
+if [ ! -d $sketch_dir ]
+then
+  mkdir $sketch_dir
 fi
 
 param=$1
@@ -39,26 +49,26 @@ param=$1
 # New sketch.
 if [[ -z $param ]]
 then
-  file=$(($(ls $TEMP_SKETCH | wc -l))).sketch
-  $editor $TEMP_SKETCH/$file
+  file=$(($(ls $sketch_dir | wc -l))).sketch
+  $editor $sketch_dir/$file
 # Re-open previous sketch files.
 elif [[ $param == -l* ]] && [[ "${param:2}" =~ ^[0-9]+(\.[0-9]+)?$ ]]
 then
   nb="${param:2}"
-  av=$(ls $TEMP_SKETCH | wc -l)
+  av=$(ls $sketch_dir | wc -l)
   if [ $av -gt $nb ] || [ $av -eq $nb ]
   then
-    file=$(($(ls $TEMP_SKETCH | wc -l) - $nb)).sketch
-    $editor $TEMP_SKETCH/$file
+    file=$(($(ls $sketch_dir | wc -l) - $nb)).sketch
+    $editor $sketch_dir/$file
   else
     echo "No previous*$nb sketch found"
   fi
 # Clean sketchs.
 elif [[ $param == "--purge" || $param == "-pu" ]]
 then
-  if [ -n "$(ls -A $TEMP_SKETCH 2>/dev/null)" ]
+  if [ -n "$(ls -A $sketch_dir 2>/dev/null)" ]
   then
-    rm $TEMP_SKETCH/*
+    rm $sketch_dir/*
     echo "Sketch files have been purged."
   else
     echo "No files to purge."
