@@ -39,5 +39,5 @@ In `~/.sketchconfig` you can enter your favourite text editor (ex: `vim`, `nano`
 -  `s -l<number>` to re-open archived sketch files you saved. For example `s -l1` will open the last sketch file you saved. `s -l2` will open the previous, etc.  
 -  `s -pu` or `s --purge` to purge all the draft files sketch created.  
 
- Sketch is archiving the saved draft files under a directory at  `~/.sketch.swp` , all the files are named as `<incremental_integer>.sketch`
+ Sketch is archiving the saved draft files under a default directory at  `$HOME/.local/share/sketch_dir` or `$XDG_DATA_HOME/sketch_dir` (if not directory not specified in `.sketchconfig`), all the files are named as `<incremental_integer>.sketch`
 
