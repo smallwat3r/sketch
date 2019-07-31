@@ -51,6 +51,26 @@ then
   else
     echo "No previous sketch found."
   fi
+# Last *2 sketch.
+elif [[ $1 == "-ll" ]]
+then
+  if [ $(ls $TEMP_SKETCH | wc -l) -eq 2 ]
+  then
+    file=$(($(ls $TEMP_SKETCH | wc -l) - 2)).sketch
+    $editor $TEMP_SKETCH/$file
+  else
+    echo "No previous*2 sketch found"
+  fi
+# Last *3 sketch.
+elif [[ $1 == "-lll" ]]
+then
+  if [ $(ls $TEMP_SKETCH | wc -l) -eq 3 ]
+  then
+    file=$(($(ls $TEMP_SKETCH | wc -l) - 3)).sketch
+    $editor $TEMP_SKETCH/$file
+  else
+    echo "No previous*3 sketch found"
+  fi
 # Clean sketchs.
 elif [[ $1 == "--purge" || $1 == "-pu" ]]
 then
@@ -83,7 +103,13 @@ then
   echo "Help and informations."
   echo " "
   echo "--last or -l"
-  echo "Open the last file created by sketch."
+  echo "Open the last sketch file saved."
+  echo " "
+  echo "-ll"
+  echo "Open the second last sketch file saved."
+  echo " "
+  echo "-lll"
+  echo "Open the third last sketch file saved."
   echo " "
   echo "--purge or -pu"
   echo "Purge all the files created in the temp dir under ~/.sketch.swp"
