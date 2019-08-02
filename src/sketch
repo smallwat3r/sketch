@@ -104,7 +104,6 @@ then
   echo "                  the previous one, etc."
   echo "-pu, --purge      purge all the files archived in set-up temp dir."
   echo "-v, --version     sketch version."
-  echo "Show Sketch version number."
   echo " "
 # Not recognised.
 else
