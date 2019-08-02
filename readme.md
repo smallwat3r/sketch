@@ -11,7 +11,7 @@ I always keep a blank file open in a corner of my window in case I need to quick
 
 Sketch is a small productivity script to rapidly generate and access draft files from a unique folder directly from the terminal.  
 
-![Alt Text](https://github.com/smallwat3r/sketch/blob/master/demo/demo.gif)
+![Alt Text](https://github.com/smallwat3r/sketch/blob/master/demo/demo.gif)  
 _in this demo `sketch` is aliased to `s`_
 
 ## Set up
