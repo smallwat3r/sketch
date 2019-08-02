@@ -25,7 +25,7 @@ cp src/sketch /usr/local/bin/sketch && chmod 755 /usr/local/bin/sketch
 
 You can now run sketch by typing `sketch` in your terminal.  
 
-A good thing is to alias Sketch to a shortcut to run it even faster from the terminal. 
+A nice thing is to alias Sketch to a shortcut to run it even faster from the terminal. 
 I personaly use `s`. You will need to close and reopen your terminal so the change can apply. 
 ```sh
 # ~/.zshrc or ~/.bashrc
@@ -37,13 +37,20 @@ You can also chose the folder location from where your sketch files are archived
 
 ## Usage
 
-**Let's suppose you aliased `sketch` to `s`**  
+```
+sketch            automatically open a new draft file from the 
+                  sketch directory.
 
--  `s` automatically open a new draft file from the sketch directory.  
--  `s -h` or `s --help` to get help on how to use sketch. 
--  `s -l<number>` re-open a sketch you saved. Ex: `s -l1` will open the last sketch you saved. `s -l2` will open the previous one, and so on...  
--  `s -pu` or `s --purge` to purge all the draft files you saved.  
--  `s -v` or `s --version` to show Sketch version number.  
+Optional Arguments
+------------------------------------------------------------
+
+-h, --help        show this help message and exit.
+-l<number>        open archived saved files. Example: -l1 will
+                  open the last sketch file saved, -l2 will open
+                  the previous one, etc.
+-pu, --purge      purge all the files archived in set-up temp dir.
+-v, --version     sketch version.
+```
 
 ---
 
