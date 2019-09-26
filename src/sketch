@@ -9,78 +9,64 @@
 #   (_-</  '_/ -_) __/ __/ _ \
 #  /___/_/\_\\__/\__/\__/_//_/
 
-
 # Load conf from possible locations.
 conf_dir=(.sketchconfig ../.sketchconfig $XDG_CONFIG_HOME/.sketchconfig $HOME/.config/.sketchconfig $HOME/.sketchconfig)
-for d in "${conf_dir[@]}"
-do
-  if [ -f $d ]
-  then
+for d in "${conf_dir[@]}"; do
+  if [ -f $d ]; then
     . $d
     break
   fi
 done
 
 editor=$editor
-if [[ -z $editor ]]
-then
+if [[ -z $editor ]]; then
   # Default editor.
   editor=vim
 fi
 
 sketch_dir=$sketch_dir
-if [[ -z $sketch_dir ]]
-then
+if [[ -z $sketch_dir ]]; then
   # Default archives dir.
-  if [[ -d $XDG_DATA_HOME ]]
-  then
+  if [[ -d $XDG_DATA_HOME ]]; then
     sketch_dir=$XDG_DATA_HOME/sketch_dir
   else
     sketch_dir=$HOME/.local/share/sketch_dir
   fi
 fi
 
-if [ ! -d $sketch_dir ]
-then
+if [ ! -d $sketch_dir ]; then
   mkdir $sketch_dir
 fi
 
 param=$1
 
 # New sketch.
-if [[ -z $param ]]
-then
+if [[ -z $param ]]; then
   file=$(($(ls $sketch_dir | wc -l))).sketch
   $editor $sketch_dir/$file
 # Re-open previous sketch.
-elif [[ $param == -l* ]] && [[ "${param:2}" =~ ^[0-9]+(\.[0-9]+)?$ ]]
-then
+elif [[ $param == -l* ]] && [[ "${param:2}" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
   nb="${param:2}"
   av=$(ls $sketch_dir | wc -l)
-  if [ $av -gt $nb ] || [ $av -eq $nb ]
-  then
+  if [ $av -gt $nb ] || [ $av -eq $nb ]; then
     file=$(($(ls $sketch_dir | wc -l) - $nb)).sketch
     $editor $sketch_dir/$file
   else
     echo "No previous*$nb sketch found"
   fi
 # Purge sketchs.
-elif [[ $param == "--purge" || $param == "-pu" ]]
-then
-  if [ -n "$(ls -A $sketch_dir 2>/dev/null)" ]
-  then
+elif [[ $param == "--purge" || $param == "-pu" ]]; then
+  if [ -n "$(ls -A $sketch_dir 2>/dev/null)" ]; then
     rm $sketch_dir/*
     echo "Sketch files have been purged."
   else
     echo "No files to purge."
   fi
 # Versioning.
-elif [[ $param == "--version" || $param == "-v" ]]
-then
+elif [[ $param == "--version" || $param == "-v" ]]; then
   echo "sketch v1.1"
 # Helpers.
-elif [[ $param == "--help" || $param == "-h" ]]
-then
+elif [[ $param == "--help" || $param == "-h" ]]; then
   echo "       __       __      __ "
   echo "  ___ / /_____ / /_____/ / "
   echo " (_-</  '_/ -_) __/ __/ _ \'"
