@@ -52,7 +52,7 @@ sketch -r<number> open archived saved file. Example:
                   sketch -r2 will reopen the previous one
                   etc...
 
-Optional Arguments
+Other Arguments
 ------------------------------------------------------------
 
 -h, --help        show this help message and exit.
