@@ -62,9 +62,10 @@ help() {
      sketch            automatically open a new draft file from the
                        sketch directory.
 
-     sketch -l<number> open archived saved file. Example: -l1 will
-                       open the last sketch file saved, -l2 will open
-                       the previous one, etc.
+     sketch -r<number> open archived saved file. Example:
+                       sketch -r1 will reopen the last sketch file saved
+                       sketch -r2 will reopen the previous one
+                       etc...
 
      Optional Arguments
      ------------------------------------------------------------
@@ -116,9 +117,19 @@ if [[ -z $param ]]; then
 fi
 
 case $param in
-"-h" | "--help") help ;;
-"-l"*) reopen "${param:2}" ;;
-"-pu" | "--purge") purge ;;
-"-v" | "--version") version ;;
-*) error ;;
+"-h" | "--help")
+    help
+    ;;
+$(awk '/^-r[0-9]+$/' <<<${param}))
+    reopen "${param:2}"
+    ;;
+"-pu" | "--purge")
+    purge
+    ;;
+"-v" | "--version")
+    version
+    ;;
+*)
+    error
+    ;;
 esac
