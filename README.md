@@ -45,9 +45,10 @@ You can also chose the folder location from where your sketch files are archived
 sketch            automatically open a new draft file from the 
                   sketch directory.
 
-sketch -l<number> open archived saved files. Example: -l1 will
-                  open the last sketch file saved, -l2 will open
-                  the previous one, etc.
+sketch -r<number> open archived saved file. Example:
+                  sketch -r1 will reopen the last sketch file saved
+                  sketch -r2 will reopen the previous one
+                  etc...
 
 Optional Arguments
 ------------------------------------------------------------
