@@ -101,7 +101,7 @@ purge() {
 }
 
 version() {
-    printf "sketch v2.0\n"
+    printf "sketch v2.1\n"
 }
 
 error() {
