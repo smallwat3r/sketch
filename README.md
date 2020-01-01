@@ -9,7 +9,9 @@
 
 I always keep a blank file open in a corner of my screen in case I need to quickly note or copy something for later. But I spend most of my time in my terminal and I've decided to build a simple bash script that will help me save time.
 
-Sketch is a small productivity script to rapidly generate and access draft files from a unique folder directly from the terminal.  
+Sketch is a small productivity script to rapidly generate and access draft files from a unique folder directly from the terminal.
+
+Sketch works with all text editor that can be opened from command line (`vim`, `nano`, `subl` etc).
 
 ![sketch](https://i.imgur.com/Wu7797l.gif)  
 
