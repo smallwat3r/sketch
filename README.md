@@ -11,7 +11,7 @@ I always keep a blank file open in a corner of my screen in case I need to quick
 
 Sketch is a small productivity script to rapidly generate and access draft files from a unique folder directly from the terminal.
 
-Sketch works with all text editor that can be opened from a terminal command (`vim`, `nano`, `subl` etc).
+Sketch works with all text editor that can be opened from a terminal command (`vim`, `macvim`, `nano`, `subl` etc).
 
 ![sketch](https://i.imgur.com/Wu7797l.gif)  
 
