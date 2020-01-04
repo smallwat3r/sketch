@@ -133,3 +133,4 @@ $(awk '/^-r[0-9]+$/' <<<${param}))
     error
     ;;
 esac
+exit 0
