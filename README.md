@@ -27,12 +27,13 @@ or
 ```sh
 git clone https://github.com/smallwat3r/sketch.git
 cd sketch
-cp bin/sketch /usr/local/bin/sketch && chmod 755 /usr/local/bin/sketch
+cp sketch /usr/local/bin/sketch && chmod 755 /usr/local/bin/sketch
 ```
 
 or (without cloning)  
 ```sh
-sudo wget https://raw.githubusercontent.com/smallwat3r/sketch/master/bin/sketch -P /usr/local/bin && sudo chmod 755 /usr/local/bin/sketch
+sudo wget https://raw.githubusercontent.com/smallwat3r/sketch/master/sketch \
+    -P /usr/local/bin && sudo chmod 755 /usr/local/bin/sketch
 ```
 
 
