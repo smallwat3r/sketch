@@ -48,10 +48,10 @@ You can also chose the folder location from where your sketch files are archived
 # .sketchconfig example file.
 
 # Your favourite editor to use Sketch (vim, nvim, subl, emacs, nano etc)
-# editor=vim
+editor=vim
 
 # Archives folder.
-# sketch_dir=~/.sketch_dir
+sketch_dir=~/.sketch_dir
 ```
 
 ## Usage
