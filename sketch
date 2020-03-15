@@ -23,7 +23,12 @@ init() {
     # Pick prefered editor (vim=default).
     editor=$editor
     if [[ -z $editor ]]; then
-        editor=vim
+        # Check global env var for prefered editor.
+        editor=$EDITOR
+        if [[ -z $editor ]]; then
+            # Default.
+            editor=vim
+        fi
     fi
 
     # Pick archives dir.
