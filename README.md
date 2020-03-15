@@ -83,9 +83,9 @@ $HOME/.config/.sketchconfig
 $HOME/.sketchconfig
 ```
 
-* editor: If not specified, sketch check for `$EDITOR` if your env variables. If it still does not exists,
+* **editor**: If not specified, sketch check for `$EDITOR` if your env variables. If it still does not exists,
 then it defaults to vim.  
-* sketch_dir: You can specify a custom directory from where your sketch files will be archived.  
+* **sketch_dir**: You can specify a custom directory from where your sketch files will be archived.  
 
 ```
 # .sketchconfig example file.
