@@ -1,6 +1,7 @@
-# Sketch config file.
+# Sketch config example file.
 
-# Your favourite editor to use Sketch.
-editor=vim
+# Your favourite editor to use Sketch (vim, nvim, subl, emacs, nano etc)
+# editor=vim
+
 # Archives folder.
-sketch_dir=~/.sketch_dir
+# sketch_dir=~/.sketch_dir
