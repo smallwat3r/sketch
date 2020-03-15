@@ -36,17 +36,38 @@ sudo wget https://raw.githubusercontent.com/smallwat3r/sketch/master/sketch \
     -P /usr/local/bin && sudo chmod 755 /usr/local/bin/sketch
 ```
 
-
 You can now run sketch by typing `sketch` in your terminal.  
 
-In `~/.sketchconfig` you can enter your favourite text editor (ex: `vim`, `nano`, `subl` ...).
+#### Archived files
+
+Each time a sketch file is created and saved, it is archived under a specific directory.
+```
+# Sketch file directory location.
+# if exists:
+$XDG_DATA_HOME/sketch_dir
+# else under:
+$HOME/.local/share/sketch_dir 
+```
+Archived files naming convention: `<integer>.sketch`.  
+So you can reopen these files using `-p<integer>`.  
+To delete all these files use `-pu` or `--purge`.  
+
+#### .sketchconfig file
+
+In `.sketchconfig` you can enter your favourite text editor (ex: `vim`, `nano`, `subl` ...).
+```
+# .sketchconfig location check by priority order.
+$XDG_CONFIG_HOME/.sketchconfig
+$HOME/.config/.sketchconfig
+$HOME/.sketchconfig
+```
+
+**Editor**
 If not specified, sketch check for `$EDITOR` if your env variables. If it still does not exists,
 then it defaults to vim.  
 
-You can also specify the folder from where your sketch files will be archived.
-By default, Sketch archives the files under at  `$HOME/.local/share/sketch_dir` or `$XDG_DATA_HOME/sketch_dir`,
-all the files are named following this convention: `<incremental_integer>.sketch`.  
-
+**Archives**
+You can specify a custom directory from where your sketch files will be archived.
 
 ```
 # .sketchconfig example file.
@@ -76,6 +97,3 @@ Other Arguments
 -pu, --purge      purge all the files archived in set-up temp dir.
 -v, --version     sketch version.
 ```
-
----
-
