@@ -39,8 +39,20 @@ sudo wget https://raw.githubusercontent.com/smallwat3r/sketch/master/sketch \
 
 You can now run sketch by typing `sketch` in your terminal.  
 
-In `~/.sketchconfig` you can enter your favourite text editor (ex: `vim`, `nano`, `subl` ...), note that `vim` is set-up as default.  
+In `~/.sketchconfig` you can enter your favourite text editor (ex: `vim`, `nano`, `subl` ...).
+If not specified, sketch check for `$EDITOR` if your env variables. If it still does not exists,
+then it defaults to vim.
 You can also chose the folder location from where your sketch files are archived.  
+
+```
+# .sketchconfig example file.
+
+# Your favourite editor to use Sketch (vim, nvim, subl, emacs, nano etc)
+# editor=vim
+
+# Archives folder.
+# sketch_dir=~/.sketch_dir
+```
 
 ## Usage
 
