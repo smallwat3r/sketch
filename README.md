@@ -41,8 +41,12 @@ You can now run sketch by typing `sketch` in your terminal.
 
 In `~/.sketchconfig` you can enter your favourite text editor (ex: `vim`, `nano`, `subl` ...).
 If not specified, sketch check for `$EDITOR` if your env variables. If it still does not exists,
-then it defaults to vim.
-You can also chose the folder location from where your sketch files are archived.  
+then it defaults to vim.  
+
+You can also specify the folder from where your sketch files will be archived.
+By default, Sketch archives the files under at  `$HOME/.local/share/sketch_dir` or `$XDG_DATA_HOME/sketch_dir`,
+all the files are named following this convention: `<incremental_integer>.sketch`.  
+
 
 ```
 # .sketchconfig example file.
@@ -74,6 +78,4 @@ Other Arguments
 ```
 
 ---
-
-Sketch is archiving the saved draft files under a default dir at  `$HOME/.local/share/sketch_dir` or `$XDG_DATA_HOME/sketch_dir` (if `sketch_dir` not specified in `.sketchconfig`), all the files are named as `<incremental_integer>.sketch`
 
