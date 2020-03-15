@@ -38,6 +38,27 @@ sudo wget https://raw.githubusercontent.com/smallwat3r/sketch/master/sketch \
 
 You can now run sketch by typing `sketch` in your terminal.  
 
+## Usage
+
+```
+sketch            automatically open a new draft file from the 
+                  sketch directory.
+
+sketch -r<number> open archived saved file. Example:
+                  sketch -r1 will reopen the last sketch file saved
+                  sketch -r2 will reopen the previous one
+                  etc...
+
+Other Arguments
+------------------------------------------------------------
+
+-h, --help        show this help message and exit.
+-pu, --purge      purge all the files archived in set-up temp dir.
+-v, --version     sketch version.
+```
+
+## Customization and info
+
 #### Archived files
 
 Each time a sketch file is created and saved, it is archived under a specific directory.
@@ -62,12 +83,9 @@ $HOME/.config/.sketchconfig
 $HOME/.sketchconfig
 ```
 
-**Editor**
-If not specified, sketch check for `$EDITOR` if your env variables. If it still does not exists,
+* editor: If not specified, sketch check for `$EDITOR` if your env variables. If it still does not exists,
 then it defaults to vim.  
-
-**Archives**
-You can specify a custom directory from where your sketch files will be archived.
+* sketch_dir: You can specify a custom directory from where your sketch files will be archived.  
 
 ```
 # .sketchconfig example file.
@@ -77,23 +95,4 @@ editor=vim
 
 # Archives folder.
 sketch_dir=~/.sketch_dir
-```
-
-## Usage
-
-```
-sketch            automatically open a new draft file from the 
-                  sketch directory.
-
-sketch -r<number> open archived saved file. Example:
-                  sketch -r1 will reopen the last sketch file saved
-                  sketch -r2 will reopen the previous one
-                  etc...
-
-Other Arguments
-------------------------------------------------------------
-
--h, --help        show this help message and exit.
--pu, --purge      purge all the files archived in set-up temp dir.
--v, --version     sketch version.
 ```
