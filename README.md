@@ -9,7 +9,7 @@
 
 I always kept a blank file open in a corner of my screen in case I need to quickly note or copy something for later. This simple bash script helps me save time to create / reopen my draft notes.
 
-Sketch is a small productivity tool to generate and access and store draft files directly from the terminal.
+Sketch is a small productivity tool to generate and access / store draft files directly from the terminal.
 
 Sketch works with all text editor that can be triggered from a terminal command (vim, nvim, macvim, nano, subl etc...).
 
