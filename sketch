@@ -4,8 +4,10 @@
 #    ___ / /_____ / /_____/ /
 #   (_-</  '_/ -_) __/ __/ _ \
 #  /___/_/\_\\__/\__/\__/_//_/
-#
-#  v2.1
+
+set -e
+self=${0##*/}
+version="v0.1 (Matthieu Petiteau)"
 
 init() {
   # Load config file from the possible locations.
@@ -52,22 +54,17 @@ help() {
 (_-</  '_/ -_) __/ __/ _ \'
 /___/_/\_\\__/\__/\__/_//_/
 
-Sketch is a small productivity tool to rapidly generate
+$self is a small productivity tool to rapidly generate
 and access draft files from the terminal.
-Created by Matthieu Petiteau <mpetiteau.pro@gmail.com>
 
-A nice thing is to alias in your .bashrc sketch to
-access it more easily. Personaly I'm using 'alias s=sketch'
+Author: Matthieu Petiteau <mpetiteau.pro@gmail.com>
 
-version 2.1
+$self            automatically open a new draft file from the
+                 temporary directory.
 
-
-sketch            automatically open a new draft file from the
-                 sketch directory.
-
-sketch -r<number> open archived saved file. Example:
-                 sketch -r1 will reopen the last sketch file saved
-                 sketch -r2 will reopen the previous one
+$self -r<number> open archived saved file. Example:
+                 $self -r1 will reopen the last sketch file saved
+                 $self -r2 will reopen the previous one
                  etc...
 
 Other Arguments
@@ -75,7 +72,7 @@ Other Arguments
 
 -h, --help        show this help message and exit.
 -pu, --purge      purge all the files archived in set-up temp dir.
--v, --version     sketch version.
+-v, --version     script version.
 \n"
 }
 
@@ -104,11 +101,7 @@ purge() {
 }
 
 version() {
-  printf "sketch v2.1\n"
-}
-
-error() {
-  printf "Command does not exists.\n"
+  printf "$self $version\n"
 }
 
 init
@@ -133,7 +126,7 @@ case $param in
     version
     ;;
   *)
-    error
+    printf "Command does not exists.\n"
     ;;
 esac
 exit 0

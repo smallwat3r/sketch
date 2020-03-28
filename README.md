@@ -7,33 +7,34 @@
 
 # Sketch
 
-I always kept a blank file open in a corner of my screen in case I need to quickly note or copy something for later. I created a simple bash script that helps me save time to create / reopen draft notes.
+I always kept a blank file open in a corner of my screen in case I need to quickly note or copy something for later. This simple bash script helps me save time to create / reopen my draft notes.
 
-Sketch is a small productivity script to rapidly generate and access draft files from a unique folder directly from the terminal.
+Sketch is a small productivity tool to generate and access and store draft files directly from the terminal.
 
-Sketch works with all text editor that can be opened from a terminal command (`vim`, `macvim`, `nano`, `subl` etc).
+Sketch works with all text editor that can be triggered from a terminal command (vim, nvim, macvim, nano, subl etc...).
 
 ![sketch](https://i.imgur.com/GyXRYVT.gif)  
 
 ## Set up
-Clone this repository and run the following commands.  
+Clone this repository and run the following commands (might need to run with sudo).  
+
 ```sh
-git clone https://github.com/smallwat3r/sketch.git
-cd sketch
-make install
+git clone https://github.com/smallwat3r/sketch.git \
+  && cd sketch \
+  && make install
 ```
 
 or  
 ```sh
-git clone https://github.com/smallwat3r/sketch.git
-cd sketch
-cp sketch /usr/local/bin/sketch && chmod 755 /usr/local/bin/sketch
+git clone https://github.com/smallwat3r/sketch.git \
+  && cd sketch \
+  && cp sketch /usr/local/bin/sketch && chmod 755 /usr/local/bin/sketch
 ```
 
 or (without cloning)  
 ```sh
-sudo wget https://raw.githubusercontent.com/smallwat3r/sketch/master/sketch \
-    -P /usr/local/bin && sudo chmod 755 /usr/local/bin/sketch
+wget https://raw.githubusercontent.com/smallwat3r/sketch/master/sketch \
+    -P /usr/local/bin && chmod 755 /usr/local/bin/sketch
 ```
 
 You can now run sketch by typing `sketch` in your terminal.  
