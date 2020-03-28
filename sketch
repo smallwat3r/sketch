@@ -47,7 +47,7 @@ init() {
   fi
 }
 
-help() {
+showhelp() {
   printf "
       __       __      __
  ___ / /_____ / /_____/ /
@@ -114,7 +114,8 @@ fi
 
 case $param in
   "-h" | "--help")
-    help
+    showhelp
+    version
     ;;
   $(awk '/^-r[0-9]+$/' <<<${param}))
     reopen "${param:2}"
