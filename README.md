@@ -15,7 +15,7 @@ Sketch works with all text editor that can be triggered from a terminal command 
 
 ![sketch](https://i.imgur.com/uHwSDXJ.gif)  
 
-## Set up
+## Installation
 Clone this repository and run the following commands (might need to run with sudo).  
 
 ```sh
@@ -37,8 +37,6 @@ or (without cloning)
 wget https://raw.githubusercontent.com/smallwat3r/sketch/master/sketch \
     -P /usr/local/bin && chmod 755 /usr/local/bin/sketch
 ```
-
-You can now run sketch by typing `sketch` in your terminal.  
 
 ## Usage
 
@@ -64,19 +62,11 @@ Other Arguments
 -v, --version     script version.
 ```
 
-## Customization and info
-
-#### Archived files
-
-Each time a sketch file is created and saved, it is archived under a specific directory.
-```
-# Sketch file directory location by priority order (if $SKETCH_ARCHIVES not set).
-$XDG_DATA_HOME/sketch_archives
-$HOME/.local/share/sketch_archives 
-```
-Archived files naming convention: `<int>.sketch`.  
+## Customization
 
 #### .sketchrc file
+
+The sketchrc file allows you to use your preferred editor.  
 
 ```
 # .sketchrc file directory location by priority order.
@@ -95,5 +85,18 @@ $HOME/.sketchrc
 SKETCH_EDITOR=vim
 
 # Archives folder.
-SKETCH_ARCHIVES=~/sketch_archives
+# Default locations:
+#     - $XDG_DATA_HOME/sketch_archives
+#     - $HOME/.local/share/sketch_archives 
+SKETCH_ARCHIVES=$HOME/.sketch_archives 
 ```
+
+#### Archived files
+
+Each time a sketch file is created and saved, it is archived under a specific directory.
+```
+# Sketch file directory location by priority order (if $SKETCH_ARCHIVES not set).
+$XDG_DATA_HOME/sketch_archives
+$HOME/.local/share/sketch_archives 
+```
+Archived files naming convention: `<int>.sketch`.  
