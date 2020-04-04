@@ -164,7 +164,7 @@ _version() {
 _init
 _param=$1
 
-if [ -z $_param ]; then
+if [[ -z $_param ]]; then
   _new
   exit 0
 fi
