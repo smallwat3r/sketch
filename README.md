@@ -78,7 +78,7 @@ $HOME/.sketchrc
 * **SKETCH_EDITOR**: sketch default editor, if not set, check for `$EDITOR` if global env vars, if not set, default to vim.
 * **SKETCH_ARCHIVES**: archived files folder from where your sketch files will be archived. 
 
-```
+```sh
 # .sketchrc example file.
 
 # Your favourite editor to use Sketch (vim, nvim, subl, emacs, nano etc)
@@ -94,7 +94,7 @@ SKETCH_ARCHIVES=$HOME/.sketch_archives
 #### Archived files
 
 Each time a sketch file is created and saved, it is archived under a specific directory.
-```
+```sh
 # Sketch file directory location by priority order (if $SKETCH_ARCHIVES not set).
 $XDG_DATA_HOME/sketch_archives
 $HOME/.local/share/sketch_archives 
