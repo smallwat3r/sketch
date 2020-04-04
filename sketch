@@ -111,7 +111,7 @@ Other Arguments
 }
 
 new() {
-  local file=$(($(ls $sketch_archives | wc -l))).sketch
+  local file=$(($(ls $sketch_archives | wc -l) + 1)).sketch
   $sketch_editor $sketch_archives/$file
 }
 
@@ -119,20 +119,26 @@ reopen() {
   local av=$(ls $sketch_archives | wc -l)
   if [ $1 -eq "0" ]; then
     printf "Index starts at 1.\n"
+    exit 1
   elif [ $av -gt $1 ] || [ $av -eq $1 ]; then
-    local file=$(($(ls $sketch_archives | wc -l) - $1)).sketch
-    $sketch_editor $sketch_archives/$file
+    local file=$sketch_archives/$1.sketch
+    if [ -f $file ]; then
+      $sketch_editor $file
+    else
+      printf "It seems that this file has been removed.\n"
+      exit 1
+    fi
   else
-    printf "No sketch file found, try to look at a lower level.\n"
+    printf "No file found, try to look at a lower level.\n"
   fi
 }
 
 purge() {
   if [ -n "$(ls -A $sketch_archives 2>/dev/null)" ]; then
     rm $sketch_archives/*
-    printf "Sketch files have been purged.\n"
+    printf "Archived files have been deleted.\n"
   else
-    printf "No files to purge.\n"
+    printf "No files to delete.\n"
   fi
 }
 
@@ -174,8 +180,8 @@ case $param in
     version
     ;;
   *)
-    printf "Command does not exists.\n"
-    exit 1
+    printf "Command not found.\n"
+    exit 127
     ;;
 esac
 exit 0
