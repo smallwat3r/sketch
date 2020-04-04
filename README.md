@@ -68,7 +68,7 @@ Other Arguments
 
 The sketchrc file allows you to use your preferred editor.  
 
-```
+```sh
 # .sketchrc file directory location by priority order.
 $XDG_CONFIG_HOME/.sketchrc
 $HOME/.config/.sketchrc
