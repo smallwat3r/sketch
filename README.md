@@ -7,9 +7,9 @@
 
 # Sketch
 
-I always kept a blank file open in a corner of my screen in case I need to quickly note or copy something for later. This simple bash script helps me save time to create / reopen my draft notes.
+I always kept a blank file open in a corner of my screen in case I needed to quickly note or copy something for later. 
 
-Sketch is a small productivity tool to generate and access / store draft files directly from the terminal.
+I created sketch to help me save time to create or open my draft notes on the go without having to leave my terminal.
 
 Sketch works with all text editor that can be triggered from a terminal command (vim, nvim, macvim, nano, subl etc...).
 
