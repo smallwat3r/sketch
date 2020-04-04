@@ -138,7 +138,7 @@ purge() {
 }
 
 list() {
-  ls -l -A $sketch_archives | awk '{
+  ls -lt -A $sketch_archives | awk '{
     split($9, name, ".");
     if (name[1])
       print "[", name[1], "]", "last edit @", $8, "on", $7, $6;
