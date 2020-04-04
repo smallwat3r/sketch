@@ -28,7 +28,8 @@ or
 ```sh
 git clone https://github.com/smallwat3r/sketch.git \
   && cd sketch \
-  && cp sketch /usr/local/bin/sketch && chmod 755 /usr/local/bin/sketch
+  && cp sketch /usr/local/bin/sketch \
+  && chmod 755 /usr/local/bin/sketch
 ```
 
 or (without cloning)  
@@ -69,29 +70,23 @@ Other Arguments
 
 Each time a sketch file is created and saved, it is archived under a specific directory.
 ```
-# Sketch file directory location.
-# if exists:
+# Sketch file directory location by priority order (if $SKETCH_ARCHIVES not set).
 $XDG_DATA_HOME/sketch_archives
-# else under:
 $HOME/.local/share/sketch_archives 
 ```
 Archived files naming convention: `<int>.sketch`.  
-So you can reopen these files using `sketch <int>`.  
-To delete all these files use `sketch -pu` or `sketch --purge`.  
 
 #### .sketchrc file
 
-In `.sketchrc` you can enter your favourite text editor (ex: `vim`, `nano`, `subl` ...).
 ```
-# .sketchrc location check by priority order.
+# .sketchrc file directory location by priority order.
 $XDG_CONFIG_HOME/.sketchrc
 $HOME/.config/.sketchrc
 $HOME/.sketchrc
 ```
 
-* **SKETCH_EDITOR**: If not specified, sketch check for `$EDITOR` if your env variables. If it still does not exists,
-then it defaults to vim.  
-* **SKETCH_ARCHIVES**: You can specify a custom directory from where your sketch files will be archived.  
+* **SKETCH_EDITOR**: sketch default editor, if not set, check for `$EDITOR` if global env vars, if not set, default to vim.
+* **SKETCH_ARCHIVES**: archived files folder from where your sketch files will be archived. 
 
 ```
 # .sketchrc example file.
@@ -100,5 +95,5 @@ then it defaults to vim.
 SKETCH_EDITOR=vim
 
 # Archives folder.
-SKETCH_ARCHIVES=~/.sketch_archives
+SKETCH_ARCHIVES=~/sketch_archives
 ```
