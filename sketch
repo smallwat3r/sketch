@@ -34,8 +34,11 @@ version="v0.2 (Matthieu Petiteau)"
 
 loadconfig() {
   # Source configs if set up in sketchrc file.
-  local conf_dir=(.sketchrc ../.sketchrc $XDG_CONFIG_HOME/.sketchrc
-    $HOME/.config/.sketchrc $HOME/.sketchrc)
+  local conf_dir=(
+    $XDG_CONFIG_HOME/.sketchrc
+    $HOME/.config/.sketchrc
+    $HOME/.sketchrc
+  )
   for d in "${conf_dir[@]}"; do
     if [ -f $d ]; then
       source $d
