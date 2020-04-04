@@ -42,20 +42,25 @@ You can now run sketch by typing `sketch` in your terminal.
 ## Usage
 
 ```
-sketch            automatically open a new draft file from the 
-                  sketch directory.
+sketch is a small productivity tool to rapidly generate and
+access draft files from the terminal.
 
-sketch -r<number> open archived saved file. Example:
-                  sketch -r1 will reopen the last sketch file saved
-                  sketch -r2 will reopen the previous one
+sketch            automatically creates and open a new draft
+                  file from the temporary directory.
+
+sketch <number>   open archived saved file. Ex:
+                  sketch 1 will reopen the last saved file.
+                  sketch 2 will reopen the previous one
                   etc...
+
+sketch ls         list all archived files.
+
+sketch purge      delete all the archived files.
 
 Other Arguments
 ------------------------------------------------------------
-
 -h, --help        show this help message and exit.
--pu, --purge      purge all the files archived in set-up temp dir.
--v, --version     sketch version.
+-v, --version     script version.
 ```
 
 ## Customization and info
@@ -66,34 +71,34 @@ Each time a sketch file is created and saved, it is archived under a specific di
 ```
 # Sketch file directory location.
 # if exists:
-$XDG_DATA_HOME/sketch_dir
+$XDG_DATA_HOME/sketch_archives
 # else under:
-$HOME/.local/share/sketch_dir 
+$HOME/.local/share/sketch_archives 
 ```
-Archived files naming convention: `<integer>.sketch`.  
-So you can reopen these files using `-p<integer>`.  
-To delete all these files use `-pu` or `--purge`.  
+Archived files naming convention: `<int>.sketch`.  
+So you can reopen these files using `sketch <int>`.  
+To delete all these files use `sketch -pu` or `sketch --purge`.  
 
-#### .sketchconfig file
+#### .sketchrc file
 
-In `.sketchconfig` you can enter your favourite text editor (ex: `vim`, `nano`, `subl` ...).
+In `.sketchrc` you can enter your favourite text editor (ex: `vim`, `nano`, `subl` ...).
 ```
-# .sketchconfig location check by priority order.
-$XDG_CONFIG_HOME/.sketchconfig
-$HOME/.config/.sketchconfig
-$HOME/.sketchconfig
+# .sketchrc location check by priority order.
+$XDG_CONFIG_HOME/.sketchrc
+$HOME/.config/.sketchrc
+$HOME/.sketchrc
 ```
 
-* **editor**: If not specified, sketch check for `$EDITOR` if your env variables. If it still does not exists,
+* **SKETCH_EDITOR**: If not specified, sketch check for `$EDITOR` if your env variables. If it still does not exists,
 then it defaults to vim.  
-* **sketch_dir**: You can specify a custom directory from where your sketch files will be archived.  
+* **SKETCH_ARCHIVES**: You can specify a custom directory from where your sketch files will be archived.  
 
 ```
-# .sketchconfig example file.
+# .sketchrc example file.
 
 # Your favourite editor to use Sketch (vim, nvim, subl, emacs, nano etc)
-editor=vim
+SKETCH_EDITOR=vim
 
 # Archives folder.
-sketch_dir=~/.sketch_dir
+SKETCH_ARCHIVES=~/.sketch_archives
 ```

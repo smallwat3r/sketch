@@ -1,49 +1,81 @@
 #!/bin/bash
-# Author: Matthieu Petiteau <mpetiteau.pro@gmail.com>
 #         __       __      __
 #    ___ / /_____ / /_____/ /
 #   (_-</  '_/ -_) __/ __/ _ \
 #  /___/_/\_\\__/\__/\__/_//_/
+#
+# Matthieu Petiteau <mpetiteau.pro@gmail.com>
+#
+# MIT License
+#
+# Copyright (c) 2019 Matthieu Petiteau
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
 set -e
 self=${0##*/}
-version="v0.1 (Matthieu Petiteau)"
+version="v0.2 (Matthieu Petiteau)"
 
-init() {
-  # Load config file from the possible locations.
-  conf_dir=(.sketchconfig ../.sketchconfig $XDG_CONFIG_HOME/.sketchconfig
-    $HOME/.config/.sketchconfig $HOME/.sketchconfig)
+loadconfig() {
+  # Source configs if set up in sketchrc file.
+  local conf_dir=(.sketchrc ../.sketchrc $XDG_CONFIG_HOME/.sketchrc
+    $HOME/.config/.sketchrc $HOME/.sketchrc)
   for d in "${conf_dir[@]}"; do
     if [ -f $d ]; then
-      . $d
+      source $d
       break
     fi
   done
+}
 
-  # Pick prefered editor (vim=default).
-  editor=$editor
-  if [[ -z $editor ]]; then
-    # Check global env var for prefered editor.
-    editor=$EDITOR
-    if [[ -z $editor ]]; then
-      # Default.
-      editor=vim
+loadeditor() {
+  # Check first for editor from sketchrc, then user default editor,
+  # and finally default to vim.
+  sketch_editor=$SKETCH_EDITOR
+  if [[ -z $sketch_editor ]]; then
+    sketch_editor=$EDITOR
+    if [[ -z $sketch_editor ]]; then
+      sketch_editor=vim
     fi
   fi
+}
 
+loadarchivesdir() {
   # Pick archives dir.
-  sketch_dir=$sketch_dir
-  if [[ -z $sketch_dir ]]; then
+  sketch_archives=$SKETCH_ARCHIVES
+  if [[ -z $sketch_archives ]]; then
     if [[ -d $XDG_DATA_HOME ]]; then
-      sketch_dir=$XDG_DATA_HOME/sketch_dir
+      sketch_archives=$XDG_DATA_HOME/sketch_archives
     else
-      sketch_dir=$HOME/.local/share/sketch_dir
+      sketch_archives=$HOME/.local/share/sketch_archives
     fi
   fi
+}
 
-  # Create archives dir if not exist.
-  if [ ! -d $sketch_dir ]; then
-    mkdir $sketch_dir
+init() {
+  loadconfig
+  loadeditor
+  loadarchivesdir
+
+  # Create archives dir if doesn't exist.
+  if [ ! -d $sketch_archives ]; then
+    mkdir $sketch_archives
   fi
 }
 
@@ -54,50 +86,63 @@ showhelp() {
 (_-</  '_/ -_) __/ __/ _ \'
 /___/_/\_\\__/\__/\__/_//_/
 
-$self is a small productivity tool to rapidly generate
-and access draft files from the terminal.
+Copyright 2020 Matthieu Petiteau, all rights reserved.
 
-Author: Matthieu Petiteau <mpetiteau.pro@gmail.com>
+$self is a small productivity tool to rapidly generate and
+access draft files from the terminal.
 
-$self            automatically open a new draft file from the
-                 temporary directory.
+$self            automatically creates and open a new draft
+                  file from the temporary directory.
 
-$self -r<number> open archived saved file. Example:
-                 $self -r1 will reopen the last sketch file saved
-                 $self -r2 will reopen the previous one
-                 etc...
+$self <number>   open archived saved file. Ex:
+                  $self 1 will reopen the last saved file.
+                  $self 2 will reopen the previous one
+                  etc...
+
+$self ls         list all archived files.
+
+$self purge      delete all the archived files.
 
 Other Arguments
 ------------------------------------------------------------
-
 -h, --help        show this help message and exit.
--pu, --purge      purge all the files archived in set-up temp dir.
 -v, --version     script version.
 \n"
 }
 
 new() {
-  file=$(($(ls $sketch_dir | wc -l))).sketch
-  $editor $sketch_dir/$file
+  local file=$(($(ls $sketch_archives | wc -l))).sketch
+  $sketch_editor $sketch_archives/$file
 }
 
 reopen() {
-  av=$(ls $sketch_dir | wc -l)
-  if [ $av -gt $1 ] || [ $av -eq $1 ]; then
-    file=$(($(ls $sketch_dir | wc -l) - $1)).sketch
-    $editor $sketch_dir/$file
+  local av=$(ls $sketch_archives | wc -l)
+  echo $1
+  if [ $1 -eq "0" ]; then
+    printf "Index starts at 1.\n"
+  elif [ $av -gt $1 ] || [ $av -eq $1 ]; then
+    local file=$(($(ls $sketch_archives | wc -l) - $1)).sketch
+    $sketch_editor $sketch_archives/$file
   else
     printf "No sketch file found, try to look at a lower level.\n"
   fi
 }
 
 purge() {
-  if [ -n "$(ls -A $sketch_dir 2>/dev/null)" ]; then
-    rm $sketch_dir/*
+  if [ -n "$(ls -A $sketch_archives 2>/dev/null)" ]; then
+    rm $sketch_archives/*
     printf "Sketch files have been purged.\n"
   else
     printf "No files to purge.\n"
   fi
+}
+
+list() {
+  ls -l -A $sketch_archives | awk '{
+    split($9, name, ".");
+    if (name[1])
+      print "[", name[1], "]", "last edit @", $8, "on", $7, $6;
+    }'
 }
 
 version() {
@@ -113,21 +158,25 @@ if [[ -z $param ]]; then
 fi
 
 case $param in
+  $(awk '/^[0-9]+$/' <<<${param}))
+    reopen "${param}"
+    ;;
+  "purge")
+    purge
+    ;;
+  "ls")
+    list
+    ;;
   "-h" | "--help")
     showhelp
     version
-    ;;
-  $(awk '/^-r[0-9]+$/' <<<${param}))
-    reopen "${param:2}"
-    ;;
-  "-pu" | "--purge")
-    purge
     ;;
   "-v" | "--version")
     version
     ;;
   *)
     printf "Command does not exists.\n"
+    exit 1
     ;;
 esac
 exit 0
