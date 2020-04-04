@@ -78,7 +78,7 @@ init() {
 
   # Create archives dir if doesn't exist.
   if [ ! -d $sketch_archives ]; then
-    mkdir $sketch_archives
+    mkdir -p $sketch_archives
   fi
 }
 
