@@ -13,7 +13,7 @@ Sketch is a small productivity tool to generate and access / store draft files d
 
 Sketch works with all text editor that can be triggered from a terminal command (vim, nvim, macvim, nano, subl etc...).
 
-![sketch](https://i.imgur.com/GyXRYVT.gif)  
+![sketch](https://i.imgur.com/uHwSDXJ.gif)  
 
 ## Set up
 Clone this repository and run the following commands (might need to run with sudo).  
