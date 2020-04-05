@@ -30,7 +30,7 @@
 
 set -e
 self=${0##*/}
-version="$self v0.2 (Matthieu Petiteau)"
+version="$self v0.3 (Matthieu Petiteau)"
 
 _load_config() {
   # Source configs if set up in sketchrc file.
