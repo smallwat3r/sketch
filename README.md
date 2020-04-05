@@ -38,7 +38,8 @@ wget https://raw.githubusercontent.com/smallwat3r/sketch/master/sketch \
 
 ## Usage
 
-```
+```console
+$ sketch --help
 sketch is a small productivity tool to rapidly generate and
 access draft files from the terminal.
 
