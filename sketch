@@ -2,7 +2,7 @@
 #         __       __      __
 #    ___ / /_____ / /_____/ /
 #   (_-</  '_/ -_) __/ __/ _ \
-#  /___/_/\_\\__/\__/\__/_//_/
+#  /___/_/\_\\__/\__\__/_//_/
 #
 # Matthieu Petiteau <mpetiteau.pro@gmail.com>
 #
@@ -40,10 +40,10 @@ _load_config() {
     $HOME/.sketchrc
   )
   for d in "${_conf_dir[@]}"; do
-    if [[ -f $d ]]; then
+    [[ -f $d ]] && {
       source $d
       break
-    fi
+    }
   done
 }
 
@@ -51,11 +51,7 @@ _load_editor() {
   # Check first for editor from sketchrc, then user default editor,
   # and finally default to vim.
   if [[ -z $SKETCH_EDITOR ]]; then
-    if [[ -z $EDITOR ]]; then
-      _sketch_editor=vim
-    else
-      _sketch_editor=$EDITOR
-    fi
+    [[ -z $EDITOR ]] && _sketch_editor=vim || _sketch_editor=$EDITOR
   else
     _sketch_editor=$SKETCH_EDITOR
   fi
@@ -64,11 +60,9 @@ _load_editor() {
 _load_archives_dir() {
   # Pick archives dir.
   if [[ -z $SKETCH_ARCHIVES ]]; then
-    if [[ -d $XDG_DATA_HOME ]]; then
+    [[ -d $XDG_DATA_HOME ]] && {
       _sketch_archives=$XDG_DATA_HOME/sketch_archives
-    else
-      _sketch_archives=$HOME/.local/share/sketch_archives
-    fi
+    } || _sketch_archives=$HOME/.local/share/sketch_archives
   else
     _sketch_archives=$SKETCH_ARCHIVES
   fi
@@ -80,9 +74,7 @@ _init() {
   _load_archives_dir
 
   # Create archives dir if doesn't exist.
-  if [[ ! -d $_sketch_archives ]]; then
-    mkdir -p $_sketch_archives
-  fi
+  [[ -d $_sketch_archives ]] || mkdir -p $_sketch_archives
 }
 
 _showhelp() {
@@ -118,35 +110,41 @@ EOF
 }
 
 _new() {
-  local _file=$(($(ls $_sketch_archives | wc -l) + 1)).sketch
-  $_sketch_editor $_sketch_archives/$_file
+  local _file_nb=$(($(
+    ls -1r $_sketch_archives |
+      head -1 |
+      cut -f 1 -d '.'
+  ) + 1))
+  [[ -z $_file_nb ]] && {
+    $_sketch_editor $_sketch_archives/1.sketch
+  } || {
+    $_sketch_editor $_sketch_archives/$_file_nb.sketch
+  }
 }
 
 _reopen() {
-  local _av=$(ls $_sketch_archives | wc -l)
-  if (($1 == 0)); then
+  (($1 == 0)) && {
     printf 'Index starts at 1.\n' >&2
     exit 1
-  elif (($_av >= $1)); then
-    local _file=$_sketch_archives/$1.sketch
-    if [ -f $_file ]; then
-      $_sketch_editor $_file
-    else
-      printf 'It seems that this file has been removed.\n' >&2
-      exit 1
-    fi
-  else
-    printf 'No file found, try to look at a lower level.\n'
-  fi
+  }
+  local _file=$_sketch_archives/$1.sketch
+  [[ -f $_file ]] && {
+    $_sketch_editor $_file
+  } || {
+    printf '%s\n%s\n' \
+      'It seems that this file does not exists.' \
+      'You can run `sketch ls` to see the existing ones.' >&2
+    exit 1
+  }
 }
 
 _purge() {
-  if [[ -n $(ls -A $_sketch_archives 2>/dev/null) ]]; then
+  [[ -n $(ls -A $_sketch_archives 2>/dev/null) ]] && {
     rm $_sketch_archives/*
     printf 'Archived files have been deleted.\n'
-  else
-    printf 'No files to delete.\n'
-  fi
+  } || {
+    printf 'No files to delete.\n' >&2
+  }
 }
 
 _list() {
@@ -161,10 +159,10 @@ _list() {
 _init
 _param=$1
 
-if [[ -z $_param ]]; then
+[[ -z $_param ]] && {
   _new
   exit 0
-fi
+}
 
 case $_param in
   $(awk '/^[0-9]+$/' <<<${_param}))
@@ -183,7 +181,7 @@ case $_param in
     printf "$version\n"
     ;;
   *)
-    printf 'Command not found.\n' >&2
+    printf "Command $_param not found.\n" >&2
     exit 127
     ;;
 esac
