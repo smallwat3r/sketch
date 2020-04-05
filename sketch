@@ -30,7 +30,7 @@
 
 set -e
 self=${0##*/}
-version="v0.2 (Matthieu Petiteau)"
+version="$self v0.2 (Matthieu Petiteau)"
 
 _load_config() {
   # Source configs if set up in sketchrc file.
@@ -86,13 +86,14 @@ _init() {
 }
 
 showhelp() {
-  printf "
+  cat <<EOF
       __       __      __
  ___ / /_____ / /_____/ /
 (_-</  '_/ -_) __/ __/ _ \'
 /___/_/\_\\__/\__/\__/_//_/
 
 Copyright 2020 Matthieu Petiteau, all rights reserved.
+$version
 
 $self is a small productivity tool to rapidly generate and
 access draft files from the terminal.
@@ -113,7 +114,7 @@ Other Arguments
 ------------------------------------------------------------
 -h, --help        show this help message and exit.
 -v, --version     script version.
-\n"
+EOF
 }
 
 _new() {
@@ -123,28 +124,28 @@ _new() {
 
 _reopen() {
   local _av=$(ls $_sketch_archives | wc -l)
-  if (( $1 == 0 )); then
-    printf "Index starts at 1.\n" >&2
+  if (($1 == 0)); then
+    printf 'Index starts at 1.\n' >&2
     exit 1
-  elif (( $_av >= $1 )); then
+  elif (($_av >= $1)); then
     local _file=$_sketch_archives/$1.sketch
     if [ -f $_file ]; then
       $_sketch_editor $_file
     else
-      printf "It seems that this file has been removed.\n" >&2
+      printf 'It seems that this file has been removed.\n' >&2
       exit 1
     fi
   else
-    printf "No file found, try to look at a lower level.\n"
+    printf 'No file found, try to look at a lower level.\n'
   fi
 }
 
 _purge() {
   if [[ -n $(ls -A $_sketch_archives 2>/dev/null) ]]; then
     rm $_sketch_archives/*
-    printf "Archived files have been deleted.\n"
+    printf 'Archived files have been deleted.\n'
   else
-    printf "No files to delete.\n"
+    printf 'No files to delete.\n'
   fi
 }
 
@@ -155,10 +156,6 @@ _list() {
       if (name[1])
         print "[", name[1], "]", "last edit @", $8, "on", $7, $6;
     }'
-}
-
-_version() {
-  printf "$self $version\n"
 }
 
 _init
@@ -173,21 +170,20 @@ case $_param in
   $(awk '/^[0-9]+$/' <<<${_param}))
     _reopen "${_param}"
     ;;
-  "purge")
+  purge)
     _purge
     ;;
-  "ls")
+  ls)
     _list
     ;;
-  "-h" | "--help")
+  -h | --help)
     _showhelp
-    _version
     ;;
-  "-v" | "--version")
-    _version
+  -v | --version)
+    printf "$version\n"
     ;;
   *)
-    printf "Command not found.\n" >&2
+    printf 'Command not found.\n' >&2
     exit 127
     ;;
 esac
