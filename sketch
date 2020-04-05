@@ -85,7 +85,7 @@ _init() {
   fi
 }
 
-showhelp() {
+_showhelp() {
   cat <<EOF
       __       __      __
  ___ / /_____ / /_____/ /
