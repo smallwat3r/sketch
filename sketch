@@ -127,7 +127,7 @@ _reopen() {
     printf 'Index starts at 1.\n' >&2
     exit 1
   }
-  local _file=$_sketch_archives/$1.sketch
+  local _file="$_sketch_archives/$1.sketch"
   [[ -f $_file ]] && {
     $_sketch_editor $_file
   } || {
