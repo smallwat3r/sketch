@@ -124,14 +124,14 @@ _new() {
 _reopen() {
   local _av=$(ls $_sketch_archives | wc -l)
   if (( $1 == 0 )); then
-    printf "Index starts at 1.\n"
+    printf "Index starts at 1.\n" >&2
     exit 1
   elif (( $_av >= $1 )); then
     local _file=$_sketch_archives/$1.sketch
     if [ -f $_file ]; then
       $_sketch_editor $_file
     else
-      printf "It seems that this file has been removed.\n"
+      printf "It seems that this file has been removed.\n" >&2
       exit 1
     fi
   else
@@ -187,7 +187,7 @@ case $_param in
     _version
     ;;
   *)
-    printf "Command not found.\n"
+    printf "Command not found.\n" >&2
     exit 127
     ;;
 esac
