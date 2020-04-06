@@ -32,46 +32,44 @@ set -e
 self=${0##*/}
 version="$self v0.3 (Matthieu Petiteau)"
 
-_load_config() {
-  # Source configs if set up in sketchrc file.
-  local _conf_dir=(
-    $XDG_CONFIG_HOME/.sketchrc
-    $HOME/.config/.sketchrc
-    $HOME/.sketchrc
-  )
-  for d in "${_conf_dir[@]}"; do
-    [[ -f $d ]] && {
-      source $d
-      break
-    }
-  done
-}
-
 _load_editor() {
   # Check first for editor from sketchrc, then user default editor,
   # and finally default to vim.
   if [[ -z $SKETCH_EDITOR ]]; then
-    [[ -z $EDITOR ]] && _sketch_editor=vim || _sketch_editor=$EDITOR
+    [[ -z $EDITOR ]] && echo 'vim' || echo $EDITOR
   else
-    _sketch_editor=$SKETCH_EDITOR
+    echo $SKETCH_EDITOR
   fi
 }
 
 _load_archives_dir() {
   # Pick archives dir.
   if [[ -z $SKETCH_ARCHIVES ]]; then
-    [[ -d $XDG_DATA_HOME ]] && {
-      _sketch_archives=$XDG_DATA_HOME/sketch_archives
-    } || _sketch_archives=$HOME/.local/share/sketch_archives
+    [[ -d $XDG_DATA_HOME ]] && echo "$XDG_DATA_HOME/sketch_archives" || {
+      echo "$HOME/.local/share/sketch_archives"
+    }
   else
-    _sketch_archives=$SKETCH_ARCHIVES
+    echo $SKETCH_ARCHIVES
   fi
 }
 
 _init() {
-  _load_config
-  _load_editor
-  _load_archives_dir
+  # Source config.
+  local _conf_dir=(
+    $XDG_CONFIG_HOME/.sketchrc
+    $HOME/.config/.sketchrc
+    $HOME/.sketchrc
+  )
+
+  for d in "${_conf_dir[@]}"; do
+    [[ -f $d ]] && {
+      source $d
+      break
+    }
+  done
+
+  _sketch_editor="$(_load_editor)"
+  _sketch_archives="$(_load_archives_dir)"
 
   # Create archives dir if doesn't exist.
   [[ -d $_sketch_archives ]] || mkdir -p $_sketch_archives
@@ -115,10 +113,9 @@ _new() {
       head -1 |
       cut -f 1 -d '.'
   ) + 1))
-  [[ -z $_file_nb ]] && {
-    $_sketch_editor $_sketch_archives/1.sketch
-  } || {
-    $_sketch_editor $_sketch_archives/$_file_nb.sketch
+
+  [[ -z $_file_nb ]] && $_sketch_editor "$_sketch_archives/1.sketch" || {
+    $_sketch_editor "$_sketch_archives/$_file_nb.sketch"
   }
 }
 
@@ -127,10 +124,10 @@ _reopen() {
     printf 'Index starts at 1.\n' >&2
     exit 1
   }
+
   local _file="$_sketch_archives/$1.sketch"
-  [[ -f $_file ]] && {
-    $_sketch_editor $_file
-  } || {
+
+  [[ -f $_file ]] && $_sketch_editor $_file || {
     printf '%s\n%s\n' \
       'It seems that this file does not exists.' \
       'You can run `sketch ls` to see the existing ones.' >&2
@@ -142,9 +139,7 @@ _purge() {
   [[ -n $(ls -A $_sketch_archives 2>/dev/null) ]] && {
     rm $_sketch_archives/*
     printf 'Archived files have been deleted.\n'
-  } || {
-    printf 'No files to delete.\n' >&2
-  }
+  } || printf 'No files to delete.\n' >&2
 }
 
 _list() {
