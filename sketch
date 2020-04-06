@@ -63,7 +63,7 @@ _init() {
 
   local _d
   for _d in "${_conf_dir[@]}"; do
-    [[ -f $d ]] && {
+    [[ -f $_d ]] && {
       source $_d
       break
     }
