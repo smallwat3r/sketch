@@ -61,9 +61,10 @@ _init() {
     $HOME/.sketchrc
   )
 
-  for d in "${_conf_dir[@]}"; do
+  local _d
+  for _d in "${_conf_dir[@]}"; do
     [[ -f $d ]] && {
-      source $d
+      source $_d
       break
     }
   done
