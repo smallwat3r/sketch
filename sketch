@@ -60,7 +60,6 @@ _init() {
     $HOME/.config/.sketchrc
     $HOME/.sketchrc
   )
-
   local _d
   for _d in "${_conf_dir[@]}"; do
     [[ -f $_d ]] && {
@@ -76,7 +75,7 @@ _init() {
   [[ -d $_sketch_archives ]] || mkdir -p $_sketch_archives
 }
 
-_showhelp() {
+_info() {
   cat <<EOF
       __       __      __
  ___ / /_____ / /_____/ /
@@ -89,22 +88,52 @@ $version
 $self is a small productivity tool to rapidly generate and
 access draft files from the terminal.
 
-$self            automatically creates and open a new draft
-                  file from the temporary directory.
+You can create a sketchrc file to configure sketch.
 
-$self <number>   open archived saved file. Ex:
-                  $self 1 will reopen the last saved file.
-                  $self 2 will reopen the previous one
-                  etc...
+.sketchrc directory location by priority order:
+  $\XDG_CONFIG_HOME/.sketchrc
+  $\HOME/.config/.sketchrc
+  $\HOME/.sketchrc
 
-$self ls         list all archived files.
+SKETCH_EDITOR: sketch default editor, if not set, check for
+\$EDITOR if global env vars, if not set, default to vim.
 
-$self purge      delete all the archived files.
+SKETCH_ARCHIVES: archived files folder from where your sketch
+files will be archived.
 
-Other Arguments
-------------------------------------------------------------
--h, --help        show this help message and exit.
--v, --version     script version.
+.sketchrc example file:
+  # Sketch editor (vim, nvim, subl, emacs, nano etc)
+  SKETCH_EDITOR=vim
+  # Archived file folder.
+  # Default locations:
+  #   - $\XDG_DATA_HOME/sketch_archives
+  #   - $\HOME/.local/share/sketch_archives
+  SKETCH_ARCHIVES=$\HOME/.sketch_archives
+
+EOF
+}
+
+_usage() {
+  cat <<EOF
+Usage:
+
+  $self            automatically creates and open a new draft
+                    file from the temporary directory.
+
+  $self <number>   open archived saved file. Ex:
+                    $self 1 will reopen the last saved file.
+                    $self 2 will reopen the previous one
+                    etc...
+
+  $self ls         list all archived files.
+
+  $self purge      delete all the archived files.
+
+Options:
+  -h, --help        show help and exit.
+  -u, --usage       show usage and exit.
+  -v, --version     script version.
+
 EOF
 }
 
@@ -171,13 +200,20 @@ case $_param in
     _list
     ;;
   -h | --help)
-    _showhelp
+    _info
+    _usage
+    ;;
+  -u | --usage)
+    _usage
     ;;
   -v | --version)
     printf "$version\n"
     ;;
   *)
-    printf "Command $_param not found.\n" >&2
+    printf '%s\n%s\n' \
+      "Error: Command $_param not found." \
+      "Run $self -u for usage and see the list of supported options." >&2
+    exit 1
     exit 127
     ;;
 esac

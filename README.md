@@ -65,7 +65,7 @@ Other Arguments
 
 #### .sketchrc file
 
-The sketchrc file allows you to use your preferred editor.  
+You can create a sketchrc file to configure sketch.
 
 ```sh
 # .sketchrc file directory location by priority order.
