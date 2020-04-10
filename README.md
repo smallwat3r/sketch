@@ -39,9 +39,8 @@ wget https://raw.githubusercontent.com/smallwat3r/sketch/master/sketch \
 ## Usage
 
 ```console
-$ sketch --help
+$ sketch --usage
 Usage:
-
   sketch            creates a new draft file.
 
   sketch <number>   open archived saved file. Ex:
