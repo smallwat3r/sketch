@@ -116,9 +116,7 @@ EOF
 _usage() {
   cat <<EOF
 Usage:
-
-  $self            automatically creates and open a new draft
-                    file from the temporary directory.
+  $self            creates a new draft file.
 
   $self <number>   open archived saved file. Ex:
                     $self 1 will reopen the last saved file.

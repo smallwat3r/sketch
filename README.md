@@ -40,25 +40,23 @@ wget https://raw.githubusercontent.com/smallwat3r/sketch/master/sketch \
 
 ```console
 $ sketch --help
-sketch is a small productivity tool to rapidly generate and
-access draft files from the terminal.
+Usage:
 
-sketch            automatically creates and open a new draft
-                  file from the temporary directory.
+  sketch            creates a new draft file.
 
-sketch <number>   open archived saved file. Ex:
-                  sketch 1 will reopen the last saved file.
-                  sketch 2 will reopen the previous one
-                  etc...
+  sketch <number>   open archived saved file. Ex:
+                    sketch 1 will reopen the last saved file.
+                    sketch 2 will reopen the previous one
+                    etc...
 
-sketch ls         list all archived files.
+  sketch ls         list all archived files.
 
-sketch purge      delete all the archived files.
+  sketch purge      delete all the archived files.
 
-Other Arguments
-------------------------------------------------------------
--h, --help        show this help message and exit.
--v, --version     script version.
+Options:
+  -h, --help        show help and exit.
+  -u, --usage       show usage and exit.
+  -v, --version     script version.
 ```
 
 ## Customization
