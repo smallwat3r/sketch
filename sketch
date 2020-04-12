@@ -211,7 +211,6 @@ case $_param in
     printf '%s\n%s\n' \
       "Error: Command $_param not found." \
       "Run $self -u for usage and see the list of supported options." >&2
-    exit 1
     exit 127
     ;;
 esac
