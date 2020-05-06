@@ -1,20 +1,21 @@
-```
-       __       __      __
-  ___ / /_____ / /_____/ /
- (_-</  '_/ -_) __/ __/ _ \'
-/___/_/\_\__/\__/\__/_//_/
-```
+<h3 align="center">sketch</h3>
+<p align="center">Create and edit draft files on the go from your terminal in your favourite text editor.</p>
 
-# Sketch
+---
 
-I always kept a blank file open in a corner of my screen in case I needed to quickly note or copy something for later, so I wrote sketch to help me save time to create or open my notes on the go without having to leave my terminal.
+I always kept a blank file open in a corner of my screen in case I 
+needed to quickly note or copy something for later, so I wrote sketch
+to help me save time to create or open my notes on the go without
+having to leave my terminal.
 
-Sketch works with all text editor that can be triggered from a terminal command (vim, nvim, macvim, nano, subl etc...).
+Sketch works with all text editor that can be triggered from a 
+terminal command (vim, nvim, macvim, nano, subl etc...).
 
 ![sketch](https://i.imgur.com/uHwSDXJ.gif)  
 
 ## Installation
-Clone this repository and run the following commands (might need to run with sudo).  
+Clone this repository and run the following commands (might need to 
+run with sudo).  
 
 ```sh
 git clone https://github.com/smallwat3r/sketch.git \
@@ -71,8 +72,10 @@ $HOME/.config/.sketchrc
 $HOME/.sketchrc
 ```
 
-* **SKETCH_EDITOR**: sketch default editor, if not set, check for `$EDITOR` if global env vars, if not set, default to vim.
-* **SKETCH_ARCHIVES**: archived files folder from where your sketch files will be archived. 
+* **SKETCH_EDITOR**: sketch default editor, if not set, check for 
+`$EDITOR` if global env vars, if not set, default to vim.
+* **SKETCH_ARCHIVES**: archived files folder from where your sketch
+files will be archived. 
 
 ```sh
 # .sketchrc example file.
@@ -89,7 +92,8 @@ SKETCH_ARCHIVES=$HOME/.sketch_archives
 
 #### Archived files
 
-Each time a sketch file is created and saved, it is archived under a specific directory.
+Each time a sketch file is created and saved, it is archived under a
+specific directory.
 ```sh
 # Sketch file directory location by priority order (if $SKETCH_ARCHIVES not set).
 $XDG_DATA_HOME/sketch_archives
