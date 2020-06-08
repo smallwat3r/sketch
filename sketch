@@ -62,11 +62,10 @@ _init() {
   )
   local _d
   for _d in "${_conf_dir[@]}"; do
-    [[ -f $_d ]] &&
-      {
-        source $_d
-        break
-      }
+    [[ -f $_d ]] && {
+      source $_d
+      break
+    }
   done
 
   _sketch_editor="$(_load_editor)"
@@ -149,29 +148,26 @@ _new() {
 }
 
 _reopen() {
-  (($1 == 0)) &&
-    {
-      printf 'Index starts at 1.\n' >&2
-      exit 1
-    }
+  (($1 == 0)) && {
+    printf 'Index starts at 1.\n' >&2
+    exit 1
+  }
 
   local _file="$_sketch_archives/$1.sketch"
 
-  [[ -f $_file ]] && $_sketch_editor $_file ||
-    {
-      printf '%s\n%s\n' \
-        'It seems that this file does not exists.' \
-        'You can run `sketch ls` to see the existing ones.' >&2
-      exit 1
-    }
+  [[ -f $_file ]] && $_sketch_editor $_file || {
+    printf '%s\n%s\n' \
+      'It seems that this file does not exists.' \
+      'You can run `sketch ls` to see the existing ones.' >&2
+    exit 1
+  }
 }
 
 _purge() {
-  [[ -n $(ls -A $_sketch_archives 2>/dev/null) ]] &&
-    {
-      rm $_sketch_archives/*
-      printf 'Archived files have been deleted.\n'
-    } || printf 'No files to delete.\n' >&2
+  [[ -n $(ls -A $_sketch_archives 2>/dev/null) ]] && {
+    rm $_sketch_archives/*
+    printf 'Archived files have been deleted.\n'
+  } || printf 'No files to delete.\n' >&2
 }
 
 _list() {
@@ -186,11 +182,10 @@ _list() {
 _init
 _param=$1
 
-[[ -z $_param ]] &&
-  {
-    _new
-    exit 0
-  }
+[[ -z $_param ]] && {
+  _new
+  exit 0
+}
 
 case $_param in
   $(awk '/^[0-9]+$/' <<<${_param}))
