@@ -29,12 +29,14 @@
 # SOFTWARE.
 
 set -e
+
 self=${0##*/}
 version="$self v0.3 (Matthieu Petiteau)"
 
+# Loads preferred text editor.
+# Check first for editor from sketchrc, then user default editor,
+# and finally default to vim.
 _load_editor() {
-  # Check first for editor from sketchrc, then user default editor,
-  # and finally default to vim.
   if [[ -z $SKETCH_EDITOR ]]; then
     [[ -z $EDITOR ]] && echo 'vim' || echo $EDITOR
   else
@@ -42,8 +44,8 @@ _load_editor() {
   fi
 }
 
+# Pick archives directory.
 _load_archives_dir() {
-  # Pick archives dir.
   if [[ -z $SKETCH_ARCHIVES ]]; then
     [[ -d $XDG_DATA_HOME ]] &&
       echo "$XDG_DATA_HOME/sketch_archives" ||
@@ -53,13 +55,14 @@ _load_archives_dir() {
   fi
 }
 
+# Loads config.
 _init() {
-  # Source config.
   local _conf_dir=(
     $XDG_CONFIG_HOME/.sketchrc
     $HOME/.config/.sketchrc
     $HOME/.sketchrc
   )
+
   local _d
   for _d in "${_conf_dir[@]}"; do
     [[ -f $_d ]] && {
@@ -71,7 +74,7 @@ _init() {
   _sketch_editor="$(_load_editor)"
   _sketch_archives="$(_load_archives_dir)"
 
-  # Create archives dir if doesn't exist.
+  # Create archives dir if it doesn't exist.
   [[ -d $_sketch_archives ]] || mkdir -p $_sketch_archives
 }
 
@@ -135,6 +138,7 @@ Options:
 EOF
 }
 
+# New sketch file.
 _new() {
   local _file_nb=$(($(
     ls -1r $_sketch_archives |
@@ -147,6 +151,7 @@ _new() {
     $_sketch_editor "$_sketch_archives/$_file_nb.sketch"
 }
 
+# Reopen a sketch file.
 _reopen() {
   (($1 == 0)) && {
     printf 'Index starts at 1.\n' >&2
@@ -163,6 +168,7 @@ _reopen() {
   }
 }
 
+# Delete all sketch files.
 _purge() {
   [[ -n $(ls -A $_sketch_archives 2>/dev/null) ]] && {
     rm $_sketch_archives/*
@@ -170,6 +176,7 @@ _purge() {
   } || printf 'No files to delete.\n' >&2
 }
 
+# List the available sketch files.
 _list() {
   ls -lt -A $_sketch_archives |
     awk '{
@@ -214,4 +221,3 @@ case $_param in
     exit 127
     ;;
 esac
-exit 0
