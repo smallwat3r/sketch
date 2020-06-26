@@ -14,6 +14,16 @@ terminal command (vim, nvim, macvim, nano, subl etc...).
 ![sketch](https://i.imgur.com/uHwSDXJ.gif)  
 
 ## Installation
+
+* Using Homebrew  
+
+```sh
+brew tap smallwat3r/sketch \
+  && brew install sketch
+```
+
+* Manually  
+
 Clone this repository and run the following commands (might need to 
 run with sudo).  
 
@@ -21,14 +31,6 @@ run with sudo).
 git clone https://github.com/smallwat3r/sketch.git \
   && cd sketch \
   && make install
-```
-
-or  
-```sh
-git clone https://github.com/smallwat3r/sketch.git \
-  && cd sketch \
-  && cp sketch /usr/local/bin/sketch \
-  && chmod 755 /usr/local/bin/sketch
 ```
 
 or (without cloning)  
