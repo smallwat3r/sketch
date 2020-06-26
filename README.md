@@ -18,7 +18,7 @@ terminal command (vim, nvim, macvim, nano, subl etc...).
 #### Using Homebrew  
 
 ```sh
-brew tap smallwat3r/sketch \
+brew tap smallwat3r/scripts \
   && brew install sketch
 ```
 
