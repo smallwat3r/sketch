@@ -15,14 +15,14 @@ terminal command (vim, nvim, macvim, nano, subl etc...).
 
 ## Installation
 
-* Using Homebrew  
+#### Using Homebrew  
 
 ```sh
 brew tap smallwat3r/sketch \
   && brew install sketch
 ```
 
-* Manually  
+#### Manual install
 
 Clone this repository and run the following commands (might need to 
 run with sudo).  
