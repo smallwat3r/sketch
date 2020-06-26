@@ -29,8 +29,7 @@ run with sudo).
 
 ```sh
 git clone https://github.com/smallwat3r/sketch.git \
-  && cd sketch \
-  && make install
+  && cd sketch && make install
 ```
 
 or (without cloning)  
