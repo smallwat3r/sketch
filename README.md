@@ -9,7 +9,7 @@ to help me save time to create or open my notes on the go without
 having to leave my terminal.
 
 Sketch works with all text editor that can be triggered from a 
-terminal command (vim, nvim, macvim, nano, subl etc...).
+terminal command (vim, nvim, macvim, nano, subl, emacs etc...).
 
 ![sketch](https://i.imgur.com/uHwSDXJ.gif)  
 
