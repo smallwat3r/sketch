@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
-#         __       __      __
-#    ___ / /_____ / /_____/ /
-#   (_-</  '_/ -_) __/ __/ _ \
-#  /___/_/\_\\__/\__\__/_//_/
-#
+
 # Matthieu Petiteau <mpetiteau.pro@gmail.com>
 #
 # MIT License
@@ -27,20 +23,19 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
 set -e
 
 self=${0##*/}
-version="$self v0.3 (Matthieu Petiteau)"
+version="$self v0.3.1"
 
 # Loads preferred text editor.
 # Check first for editor from sketchrc, then user default editor,
 # and finally default to vim.
 _load_editor() {
   if [[ -z $SKETCH_EDITOR ]]; then
-    [[ -z $EDITOR ]] && echo 'vim' || echo $EDITOR
+    [[ -z $EDITOR ]] && echo 'vim' || echo "$EDITOR"
   else
-    echo $SKETCH_EDITOR
+    echo "$SKETCH_EDITOR"
   fi
 }
 
@@ -51,22 +46,22 @@ _load_archives_dir() {
       echo "$XDG_DATA_HOME/sketch_archives" ||
       echo "$HOME/.local/share/sketch_archives"
   else
-    echo $SKETCH_ARCHIVES
+    echo "$SKETCH_ARCHIVES"
   fi
 }
 
 # Loads config.
 _init() {
   local _conf_dir=(
-    $XDG_CONFIG_HOME/.sketchrc
-    $HOME/.config/.sketchrc
-    $HOME/.sketchrc
+    "$XDG_CONFIG_HOME/.sketchrc"
+    "$HOME/.config/.sketchrc"
+    "$HOME/.sketchrc"
   )
 
   local _d
   for _d in "${_conf_dir[@]}"; do
     [[ -f $_d ]] && {
-      source $_d
+      source "$_d"
       break
     }
   done
@@ -75,23 +70,18 @@ _init() {
   _sketch_archives="$(_load_archives_dir)"
 
   # Create archives dir if it doesn't exist.
-  [[ -d $_sketch_archives ]] || mkdir -p $_sketch_archives
+  [[ -d $_sketch_archives ]] || mkdir -p "$_sketch_archives"
 }
 
 _info() {
   cat <<EOF
-      __       __      __
- ___ / /_____ / /_____/ /
-(_-</  '_/ -_) __/ __/ _ \'
-/___/_/\_\\__/\__/\__/_//_/
-
-Copyright 2020 Matthieu Petiteau, all rights reserved.
 $version
+Copyright 2020 Matthieu Petiteau, all rights reserved.
 
 $self is a small productivity tool to rapidly generate and
 access draft files from the terminal.
 
-You can create a sketchrc file to configure sketch.
+You can create a .sketchrc file to configure sketch.
 
 .sketchrc directory location by priority order:
   $\XDG_CONFIG_HOME/.sketchrc
@@ -141,14 +131,17 @@ EOF
 # New sketch file.
 _new() {
   local _file_nb=$(($(
-    ls -1r $_sketch_archives |
+    find "$_sketch_archives" -type f -depth 1 -name '[0-9].sketch' -execdir echo '{}' ';' |
+      sort -r |
       head -1 |
       cut -f 1 -d '.'
   ) + 1))
 
-  [[ -z $_file_nb ]] &&
-    $_sketch_editor "$_sketch_archives/1.sketch" ||
+  if [[ -z $_file_nb ]]; then
+    $_sketch_editor "$_sketch_archives/1.sketch"
+  else
     $_sketch_editor "$_sketch_archives/$_file_nb.sketch"
+  fi
 }
 
 # Reopen a sketch file.
@@ -160,30 +153,41 @@ _reopen() {
 
   local _file="$_sketch_archives/$1.sketch"
 
-  [[ -f $_file ]] && $_sketch_editor $_file || {
+  if [[ -f $_file ]]; then
+    $_sketch_editor "$_file"
+  else
     printf '%s\n%s\n' \
       'It seems that this file does not exists.' \
-      'You can run `sketch ls` to see the existing ones.' >&2
+      'You can run "sketch ls" to see the existing ones.' >&2
     exit 1
-  }
+  fi
 }
 
 # Delete all sketch files.
 _purge() {
-  [[ -n $(ls -A $_sketch_archives 2>/dev/null) ]] && {
-    rm $_sketch_archives/*
+  if [[ -n $(ls -A "$_sketch_archives" 2>/dev/null) ]]; then
+    rm "$_sketch_archives"/*
     printf 'Archived files have been deleted.\n'
-  } || printf 'No files to delete.\n' >&2
+  else
+    printf 'No files to delete.\n' >&2
+  fi
 }
 
 # List the available sketch files.
 _list() {
-  ls -lt -A $_sketch_archives |
-    awk '{
-      split($9, name, ".");
-      if (name[1])
-        print "[", name[1], "]", "last edit @", $8, "on", $7, $6;
-    }'
+  find "$_sketch_archives" -type f -depth 1 -name '[0-9].sketch' -print0 |
+    xargs -0 ls -ltA |
+    awk '
+      function basename(file) {
+          sub(".*/", "", file)
+          return file
+      }
+      {
+        split(basename($9), name, ".");
+        if (name[1])
+          print "[", name[1], "]", "last edit @", $8, "on", $7, $6;
+      }
+    '
 }
 
 _init
@@ -195,7 +199,7 @@ _param=$1
 }
 
 case $_param in
-  $(awk '/^[0-9]+$/' <<<${_param}))
+  "$(awk '/^[0-9]+$/' <<<"${_param}")")
     _reopen "${_param}"
     ;;
   purge)
@@ -212,7 +216,7 @@ case $_param in
     _usage
     ;;
   -v | --version)
-    printf "$version\n"
+    printf '%s\n' "$version"
     ;;
   *)
     printf '%s\n%s\n' \
